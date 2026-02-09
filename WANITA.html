@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koleksi Wanita - Butik Tradisi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #bf9b30;
+            --secondary-color: #19281f;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #fafaf8;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--secondary-color);
+            color: var(--white);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-banner {
+            background: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo img {
+            display: block;
+            margin-left: -80px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-color);
+        }
+		.icon-carian {
+           width: 20px;      /* boleh ubah ikut saiz yang awak nak */
+           height: 20px;
+        }
+
+         .nav-icons button {
+           background: none;
+           border: none;
+           cursor: pointer;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons button {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-icons button:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger-menu {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        .hamburger-menu:hover {
+            color: var(--primary-color);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: var(--secondary-color);
+            z-index: 2000;
+            transition: left 0.3s ease-in-out;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .side-menu-header h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-menu:hover {
+            color: var(--primary-color);
+        }
+
+        .side-menu-items {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .side-menu-items li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .side-menu-items a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .side-menu-items a:hover {
+            background: rgba(191,155,48,0.1);
+            color: var(--primary-color);
+            padding-left: 30px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-top: 120px;
+            padding: 80px 30px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('hed2.png') center/cover;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .collection-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .product-count {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .product-count strong {
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--white);
+            border: 1px solid #e5e5e5;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary-color);
+            color: var(--white);
+            border-color: var(--secondary-color);
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 1px solid #e5e5e5;
+            background: var(--white);
+            color: var(--text-dark);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 1px solid #e5e5e5;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .product-image-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 15px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .product-badge.sale {
+            background: #e74c3c;
+            color: var(--white);
+        }
+
+        .product-badge.new {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .product-badge:not(.sale):not(.new) {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .product-icons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover .product-icons {
+            opacity: 1;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .quick-add {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover .quick-add {
+            transform: translateY(0);
+        }
+
+        .quick-add:hover {
+            background: var(--primary-color);
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-vendor {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            min-height: 45px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .price-current {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .price-current.price-sale {
+            color: #e74c3c;
+        }
+
+        .price-original {
+            font-size: 14px;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #e74c3c;
+            color: var(--white);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .product-colors {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .color-dot:hover,
+        .color-dot.active {
+            border-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .stars {
+            color: var(--primary-color);
+        }
+
+        .rating-count {
+            color: var(--text-light);
+            font-size: 12px;
+        }
+
+        .footer {
+            background: var(--white);
+            padding: 60px 30px 30px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: var(--text-dark);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #e5e5e5;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+		.search-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#searchInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-carian {
+    width: 24px;
+    height: 24px;
+}
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hamburger-menu {
+                display: block;
+            }
+            .logo img {
+                width: 180px;
+                margin-left: 0;
+            }
+            .page-header h1 {
+                font-size: 32px;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            .filter-controls {
+                width: 100%;
+            }
+            .filter-btn {
+                flex: 1;
+                min-width: 100px;
+            }
+            .sort-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-banner">KOLEKSI BARU RAYA 2026 - DISKAUN SEHINGGA 70%</div>
+        <nav class="nav-container">
+            <button class="hamburger-menu" id="hamburgerBtn">☰</button>
+            <a href="index.html" class="logo"><img src="lo.png" alt="Butik Tradisi Logo" width="250"></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sedondon.html">Sedondon</a></li>
+                <li><a href="lelaki.html">Lelaki</a></li>
+                <li><a href="#">Wanita</a></li>
+                <li><a href="KANAK-KANAK.html">Kanak-kanak</a></li>
+                <li><a href="AKSESORI.html">Aksesori</a></li>
+                <li><a href="hubungi.html">Hubungi Kami</a></li>
+            </ul>
+            <div class="nav-icons">
+   <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Cari...">
+    <button onclick="performSearch()">
+        <img src="ikon/carian.png" alt="Cari" class="icon-carian">
+    </button>
+</div>
+
+<a href="Login.html">
+    <img src="ikon/profil.png" alt="Profil" class="icon-carian">
+</a>
+<a href="TEMPAHAN.html">
+    <img src="ikon/bakul.png" alt="Bakul" class="icon-carian">
+</a>
+
+</div>
+</nav>
+</header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>MENU</h3>
+            <button class="close-menu" id="closeMenuBtn">×</button>
+        </div>
+       <ul class="side-menu-items">
+            <li><a href="#">Home</a></li>
+            <li><a href="sedondon.html">Sedondon</a></li>
+            <li><a href="LELAKI.html">Lelaki</a></li>
+            <li><a href="#">Perempuan</a></li>
+            <li><a href="KANAK-KANAK.html">Kanak-kanak</a></li>
+            <li><a href="AKSESORI.html">Aksesori</a></li>
+            <li><a href="Hubungi.html">Hubungi Kami</a></li>
+            <li><a href="Login.html">Login</a></li>
+        </ul>
+    </div>
+
+    <div class="page-header">
+        <h1>Koleksi Wanita Raya 2026</h1>
+        <p>Koleksi baju kurung, kebaya dan pakaian tradisional wanita yang elegan dan menawan. Diperbuat daripada fabrik premium dengan jahitan halus untuk tampilan yang sempurna.</p>
+    </div>
+
+    <div class="collection-container">
+        <div class="filter-section">
+            <div class="product-count">
+                <strong id="productCount">24 produk</strong>
+            </div>
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="kurung">Baju Kurung</button>
+                <button class="filter-btn" data-filter="kebaya">Kebaya</button>
+                <button class="filter-btn" data-filter="kaftan">Kaftan</button>
+                <select class="sort-select" id="sortSelect">
+                    <option value="popular">Terlaris</option>
+                    <option value="price-low">Harga: Rendah ke Tinggi</option>
+                    <option value="price-high">Harga: Tinggi ke Rendah</option>
+                    <option value="newest">Terbaru</option>
+                    <option value="name">A-Z</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <footer class="footer" id="hubungi">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>PAUTAN PANTAS</h4>
+                    <ul>
+                        <li><a href="Hubungi.html">Hubungi Kami</a></li>
+                        <li><a href="index.html">Jejak Pesanan</a></li>
+                        <li><a href="index.html">FAQ</a></li>
+                        <li><a href="index.html">Maklumat Penghantaran</a></li>
+                        <li><a href="index.html">Polisi Pertukaran</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>BELI DENGAN KAMI</h4>
+                    <ul>
+                        <li><a href="SEDONDON.html">Koleksi Sedondon</a></li>
+                        <li><a href="LELAKI.html">Koleksi Lelaki</a></li>
+                        <li><a href="WANITA.html">Koleksi Wanita</a></li>
+                        <li><a href="KANAK-KANAK.html">Koleksi Kanak-kanak</a></li>
+                        <li><a href="AKSESORI.html">Aksesori</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>IKUTI KAMI</h4>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/p/Tujoh-Kuntom-100063709202037/" target="_blank" title="Facebook">📘</a>
+                        <a href="https://www.instagram.com/tujohkuntom/?hl=en" target="_blank" title="Instagram">📷</a>
+                        <a href="https://www.threads.com/@tujohkuntom" target="_blank" title="Threads">🐦</a>
+                    </div>
+                </div>
+            <div class="footer-column">
+                <h4>HUBUNGI KAMI</h4>
+                <p style="font-size: 14px; line-height: 1.8;">
+                    37, Jalan Raja Mahmud<br>
+                    Kampung Baru, 50300<br>
+                    Kuala Lumpur, Malaysia<br><br>
+                    Tel: +60 12-553 1935<br>
+                    Email: info@tujohrembulan.my
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Tujoh Rembulan. Hak Cipta Terpelihara.</p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        hamburgerBtn.addEventListener('click', () => {
+            sideMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.side-menu-items a').forEach(link => {
+            link.addEventListener('click', () => {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        const products = [
+            { id: 1, name: 'Baju Kurung Velvet', category: 'kurung', price: 219, originalPrice: 319, image: 'top3.png', badge: 'sale', colors: ['#e8b4b8', '#c9a0dc', '#b4d4e1'], rating: 5, reviews: 245, popular: 1 },
+            { id: 2, name: 'Abaya Moden', category: 'kaftan', price: 299, originalPrice: null, image: 'top5.png', badge: 'new', colors: ['#d4af37', '#87ceeb', '#dda0dd'], rating: 5, reviews: 198, popular: 2 },
+            { id: 3, name: 'Baju Kurung Silver', category: 'kurung', price: 279, originalPrice: 369, image: 'top6.png', badge: 'sale', colors: ['#ffc0cb', '#e6e6fa', '#ffe4e1'], rating: 5, reviews: 212, popular: 3 },
+            { id: 4, name: 'Jubah Egypt Silk', category: 'kaftan', price: 349, originalPrice: null, image: 'top7.png', badge: 'premium', colors: ['#4b0082', '#8b008b', '#191970'], rating: 5, reviews: 165, popular: 4 },
+            { id: 5, name: 'Baju Kebaya Kayangan', category: 'kebaya', price: 239, originalPrice: 309, image: 'PEREMPUAN 1.jpeg', badge: 'sale', colors: ['#f0e68c', '#f5deb3', '#fff8dc'], rating: 5, reviews: 221, popular: 5 }
+           ];
+
+        let currentFilter = 'all';
+        let currentSort = 'popular';
+        let filteredProducts = [...products];
+
+        function renderProducts(productsToRender) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            productsToRender.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+
+                const discount = product.originalPrice 
+                    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+                    : 0;
+
+                const badgeHTML = product.badge === 'sale' 
+                    ? `<div class="product-badge sale">-${discount}%</div>`
+                    : product.badge === 'new'
+                    ? `<div class="product-badge new">Baharu</div>`
+                    : product.badge 
+                    ? `<div class="product-badge">${product.badge === 'exclusive' ? 'Eksklusif' : 'Premium'}</div>`
+                    : '';
+
+                const colorsHTML = product.colors.map((color, i) => 
+                    `<div class="color-dot ${i === 0 ? 'active' : ''}" style="background: ${color};" data-color="${color}"></div>`
+                ).join('');
+
+                const starsHTML = '★'.repeat(product.rating) + '☆'.repeat(5 - product.rating);
+
+                card.innerHTML = `
+                    <div class="product-image-wrap">
+                        <img src="${product.image}" alt="${product.name}">
+                        ${badgeHTML}
+                        <div class="product-icons">
+                            <button class="icon-btn" title="Tambah ke Wishlist" onclick="addToWishlist(${product.id})">♡</button>
+                            <button class="icon-btn" title="Lihat Pantas" onclick="quickView(${product.id})">👁</button>
+                        </div>
+                        <div class="quick-add" onclick="addToCart(${product.id})">+ Tambah ke Troli</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-vendor">Butik Tradisi</div>
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">
+                            <span class="price-current ${product.originalPrice ? 'price-sale' : ''}">RM${product.price.toFixed(2)}</span>
+                            ${product.originalPrice ? `<span class="price-original">RM${product.originalPrice.toFixed(2)}</span>` : ''}
+                            ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ''}
+                        </div>
+                        <div class="product-colors">
+                            ${colorsHTML}
+                        </div>
+                        <div class="product-rating">
+                            <span class="stars">${starsHTML}</span>
+                            <span class="rating-count">(${product.reviews})</span>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            document.getElementById('productCount').innerHTML = `<strong>${productsToRender.length} produk</strong>`;
+
+            document.querySelectorAll('.color-dot').forEach(dot => {
+                dot.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const siblings = this.parentElement.querySelectorAll('.color-dot');
+                    siblings.forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        function filterProducts(category) {
+            currentFilter = category;
+            if (category === 'all') {
+                filteredProducts = [...products];
+            } else {
+                filteredProducts = products.filter(p => p.category === category);
+            }
+            sortProducts(currentSort);
+        }
+
+        function sortProducts(sortType) {
+            currentSort = sortType;
+            let sorted = [...filteredProducts];
+
+            switch(sortType) {
+                case 'popular':
+                    sorted.sort((a, b) => a.popular - b.popular);
+                    break;
+                case 'price-low':
+                    sorted.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sorted.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    sorted.sort((a, b) => a.id - b.id);
+                    break;
+                case 'name':
+                    sorted.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+            }
+
+            renderProducts(sorted);
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterProducts(this.dataset.filter);
+            });
+        });
+
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            sortProducts(this.value);
+        });
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            alert(`"${product.name}" telah ditambah ke troli!`);
+        }
+
+        function addToWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            alert(`"${product.name}" telah ditambah ke wishlist!`);
+        }
+
+        function quickView(productId) {
+            const product = products.find(p => p.id === productId);
+            alert(`Lihat Pantas: ${product.name}\n\nHarga: RM${product.price}\nRating: ${product.rating}/5 (${product.reviews} ulasan)`);
+        }
+		function performSearch() {
+    var searchText = document.getElementById('searchInput').value;
+    
+    if (searchText.trim() === '') {
+        alert('Sila masukkan kata kunci carian');
+        return;
+    }
+    
+    // Cara 1: Cari dalam halaman semasa
+    // Contoh: highlight text yang dicari
+    window.find(searchText);
+    
+    // ATAU Cara 2: Pergi ke halaman carian dengan query
+    // window.location.href = 'search.html?q=' + encodeURIComponent(searchText);
+    
+    // ATAU Cara 3: Cari menggunakan Google
+    // window.open('https://www.google.com/search?q=' + encodeURIComponent(searchText), '_blank');
+}
+
+// Supaya boleh tekan Enter untuk search
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+        renderProducts(products);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

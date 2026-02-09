@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubungi Kami - Butik Tradisi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #bf9b30;
+            --secondary-color: #19281f;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #fafaf8;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        .header {
+            background: var(--secondary-color);
+            color: var(--white);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-banner {
+            background: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo img {
+            display: block;
+            margin-left: -80px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-color);
+        }
+		.icon-carian {
+           width: 20px;      /* boleh ubah ikut saiz yang awak nak */
+           height: 20px;
+        }
+
+         .nav-icons button {
+           background: none;
+           border: none;
+           cursor: pointer;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons button {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-icons button:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger-menu {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        .hamburger-menu:hover {
+            color: var(--primary-color);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: var(--secondary-color);
+            z-index: 2000;
+            transition: left 0.3s ease-in-out;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .side-menu-header h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-menu:hover {
+            color: var(--primary-color);
+        }
+
+        .side-menu-items {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .side-menu-items li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .side-menu-items a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .side-menu-items a:hover {
+            background: rgba(191,155,48,0.1);
+            color: var(--primary-color);
+            padding-left: 30px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-top: 120px;
+            padding: 80px 30px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600') center/cover;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            border: 1px solid #e5e5e5;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .contact-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .contact-card a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .contact-card a:hover {
+            color: var(--secondary-color);
+        }
+
+        .contact-form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .form-info {
+            opacity: 0;
+            animation: fadeInLeft 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .form-info h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .form-info p {
+            color: var(--text-light);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .info-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .info-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            font-size: 24px;
+            color: var(--primary-color);
+            min-width: 30px;
+        }
+
+        .info-text {
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .contact-form {
+            background: var(--bg-light);
+            padding: 40px;
+            border: 1px solid #e5e5e5;
+            opacity: 0;
+            animation: fadeInRight 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e5e5e5;
+            background: var(--white);
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .map-section {
+            margin-bottom: 60px;
+            border: 1px solid #e5e5e5;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+        }
+
+        .map-section iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .business-hours {
+            background: var(--bg-light);
+            padding: 50px 30px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        }
+
+        .business-hours h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hours-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .hours-item {
+            padding: 20px;
+            background: var(--white);
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s;
+        }
+
+        .hours-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .day {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .time {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .footer {
+            background: var(--white);
+            padding: 60px 30px 30px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: var(--text-dark);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #e5e5e5;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+		.search-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#searchInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-carian {
+    width: 24px;
+    height: 24px;
+}
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hamburger-menu {
+                display: block;
+            }
+            .logo img {
+                width: 180px;
+                margin-left: 0;
+            }
+            .page-header h1 {
+                font-size: 32px;
+            }
+            .contact-form-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .form-info h2 {
+                font-size: 28px;
+            }
+            .contact-form {
+                padding: 30px 20px;
+            }
+            .map-section iframe {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-banner">KOLEKSI BARU RAYA 2026 - DISKAUN SEHINGGA 70%</div>
+        <nav class="nav-container">
+            <button class="hamburger-menu" id="hamburgerBtn">☰</button>
+            <a href="index.html" class="logo"><img src="lo.png" alt="Butik Tradisi Logo" width="250"></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sedondon.html">Sedondon</a></li>
+                <li><a href="lelaki.html">Lelaki</a></li>
+                <li><a href="wanita.html">Wanita</a></li>
+                <li><a href="KANAK-KANAK.html">Kanak-kanak</a></li>
+                <li><a href="aksesori.html">Aksesori</a></li>
+                <li><a href="hubungi.html">Hubungi Kami</a></li>
+            </ul>
+           <div class="nav-icons">
+   <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Cari...">
+    <button onclick="performSearch()">
+        <img src="ikon/carian.png" alt="Cari" class="icon-carian">
+    </button>
+</div>
+
+<a href="Login.html">
+    <img src="ikon/profil.png" alt="Profil" class="icon-carian">
+</a>
+<a href="TEMPAHAN.html">
+    <img src="ikon/bakul.png" alt="Bakul" class="icon-carian">
+</a>
+
+</div>
+</nav>
+</header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>MENU</h3>
+            <button class="close-menu" id="closeMenuBtn">×</button>
+        </div>
+       <ul class="side-menu-items">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sedondon.html">Sedondon</a></li>
+            <li><a href="LELAKI.html">Lelaki</a></li>
+            <li><a href="WANITA.html">Perempuan</a></li>
+            <li><a href="KANAK-KANAK.html">Kanak-kanak</a></li>
+            <li><a href="AKSESORI.html">Aksesori</a></li>
+            <li><a href="">Hubungi Kami</a></li>
+            <li><a href="Login.html">Login</a></li>
+        </ul>
+    </div>
+
+    <div class="page-header">
+        <h1>Hubungi Kami</h1>
+        <p>Kami sedia membantu! Hubungi kami untuk sebarang pertanyaan mengenai produk, pesanan atau khidmat pelanggan. Pasukan kami akan membalas anda dengan segera.</p>
+    </div>
+
+    <div class="contact-container">
+        <div class="contact-grid">
+            <div class="contact-card" style="animation-delay: 0s;">
+                <div class="contact-icon">📍</div>
+                <h3>Alamat Kedai</h3>
+                <p>37, Jalan Raja Mahmud<br>
+                Kampung Baru, 50300<br>
+                Kuala Lumpur, Malaysia</p>
+            </div>
+            <div class="contact-card" style="animation-delay: 0.1s;">
+                <div class="contact-icon">📞</div>
+                <h3>Telefon</h3>
+                <p>Talian Utama:<br>
+                <a href="tel:+60125531935">+60 12-553 1935</a></p>
+                <p>WhatsApp:<br>
+                <a href="https://wa.me/60172861655">+60 17-286 1655</a></p>
+            </div>
+            <div class="contact-card" style="animation-delay: 0.2s;">
+                <div class="contact-icon">✉️</div>
+                <h3>Email</h3>
+                <p>Pertanyaan Am:<br>
+                <a href="mailto:info@butiktradisi.my">info@tujohrembulan.my</a></p>
+                <p>Sokongan Pelanggan:<br>
+                <a href="mailto:support@butiktradisi.my">support@tujohrembulan.my</a></p>
+            </div>
+            <div class="contact-card" style="animation-delay: 0.3s;">
+                <div class="contact-icon">⏰</div>
+                <h3>Waktu Operasi</h3>
+                <p>Isnin - Jumaat: 10:00 - 21:00<br>
+                Sabtu - Ahad: 10:00 - 22:00<br>
+                Cuti Umum: 11:00 - 20:00</p>
+            </div>
+        </div>
+
+        <div class="contact-form-section">
+            <div class="form-info">
+                <h2>Hantar Mesej Kepada Kami</h2>
+                <p>Ada pertanyaan atau maklum balas? Sila isi borang di sebelah dan kami akan menghubungi anda secepat mungkin. Kami menghargai setiap mesej yang diterima.</p>
+                
+                <ul class="info-list">
+                    <li>
+                        <span class="info-icon">✓</span>
+                        <span class="info-text">Respons pantas dalam masa 24 jam</span>
+                    </li>
+                    <li>
+                        <span class="info-icon">✓</span>
+                        <span class="info-text">Khidmat pelanggan yang mesra</span>
+                    </li>
+                    <li>
+                        <span class="info-icon">✓</span>
+                        <span class="info-text">Sokongan dalam Bahasa Malaysia &amp; English</span>
+                    </li>
+                    <li>
+                        <span class="info-icon">✓</span>
+                        <span class="info-text">Penghantaran percuma untuk pembelian RM500 ke atas</span>
+                    </li>
+                </ul>
+
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/p/Tujoh-Kuntom-100063709202037/" target="_blank" title="Facebook">📘</a>
+                        <a href="https://www.instagram.com/tujohkuntom/?hl=en" target="_blank" title="Instagram">📷</a>
+                        <a href="https://www.threads.com/@tujohkuntom" target="_blank" title="Threads">🐦</a>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nama Penuh *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Alamat Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Nombor Telefon *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subjek *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Pilih Subjek</option>
+                            <option value="order">Pertanyaan Pesanan</option>
+                            <option value="product">Pertanyaan Produk</option>
+                            <option value="delivery">Penghantaran &amp; Tracking</option>
+                            <option value="return">Pertukaran &amp; Pulangan</option>
+                            <option value="feedback">Maklum Balas</option>
+                            <option value="other">Lain-lain</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mesej Anda *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Hantar Mesej</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.7669744665357!2d101.69574731475393!3d3.165206997690473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37d63e000001%3A0x6b7f2d6d7b1e2f0!2sKampung%20Baru%2C%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div class="business-hours">
+            <h2>Waktu Perniagaan</h2>
+            <div class="hours-grid">
+                <div class="hours-item">
+                    <div class="day">ISNIN - KHAMIS</div>
+                    <div class="time">10:00 Pagi - 9:00 Malam</div>
+                </div>
+                <div class="hours-item">
+                    <div class="day">JUMAAT</div>
+                    <div class="time">10:00 Pagi - 9:30 Malam</div>
+                </div>
+                <div class="hours-item">
+                    <div class="day">SABTU - AHAD</div>
+                    <div class="time">10:00 Pagi - 10:00 Malam</div>
+                </div>
+                <div class="hours-item">
+                    <div class="day">CUTI UMUM</div>
+                    <div class="time">11:00 Pagi - 8:00 Malam</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>PAUTAN PANTAS</h4>
+                    <ul>
+                        <li><a href="Hubungi.html">Hubungi Kami</a></li>
+                        <li><a href="index.html">Jejak Pesanan</a></li>
+                        <li><a href="index.html">FAQ</a></li>
+                        <li><a href="index.html">Maklumat Penghantaran</a></li>
+                        <li><a href="index.html">Polisi Pertukaran</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>BELI DENGAN KAMI</h4>
+                    <ul>
+                        <li><a href="SEDONDON.html">Koleksi Sedondon</a></li>
+                        <li><a href="LELAKI.html">Koleksi Lelaki</a></li>
+                        <li><a href="WANITA.html">Koleksi Wanita</a></li>
+                        <li><a href="KANAK-KANAK.html">Koleksi Kanak-kanak</a></li>
+                        <li><a href="AKSESORI.html">Aksesori</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>IKUTI KAMI</h4>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/p/Tujoh-Kuntom-100063709202037/" target="_blank" title="Facebook">📘</a>
+                        <a href="https://www.instagram.com/tujohkuntom/?hl=en" target="_blank" title="Instagram">📷</a>
+                        <a href="https://www.threads.com/@tujohkuntom" target="_blank" title="Threads">🐦</a>
+                    </div>
+                </div>
+            <div class="footer-column">
+                <h4>HUBUNGI KAMI</h4>
+                <p style="font-size: 14px; line-height: 1.8;">
+                    37, Jalan Raja Mahmud<br>
+                    Kampung Baru, 50300<br>
+                    Kuala Lumpur, Malaysia<br><br>
+                    Tel: +60 12-553 1935<br>
+                    Email: info@tujohrembulan.my
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Tujoh Rembulan. Hak Cipta Terpelihara.</p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        hamburgerBtn.addEventListener('click', () => {
+            sideMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.side-menu-items a').forEach(link => {
+            link.addEventListener('click', () => {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+		function performSearch() {
+    var searchText = document.getElementById('searchInput').value;
+    
+    if (searchText.trim() === '') {
+        alert('Sila masukkan kata kunci carian');
+        return;
+    }
+    
+    // Cara 1: Cari dalam halaman semasa
+    // Contoh: highlight text yang dicari
+    window.find(searchText);
+    
+    // ATAU Cara 2: Pergi ke halaman carian dengan query
+    // window.location.href = 'search.html?q=' + encodeURIComponent(searchText);
+    
+    // ATAU Cara 3: Cari menggunakan Google
+    // window.open('https://www.google.com/search?q=' + encodeURIComponent(searchText), '_blank');
+}
+
+// Supaya boleh tekan Enter untuk search
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').
+value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            alert(
+                "Terima kasih, " + name + "!\n\n" +
+                "Mesej anda telah berjaya dihantar.\n" +
+                "Kami akan menghubungi anda dalam masa terdekat."
+            );
+
+            this.reset();
+        });
+    </script>
+</body>
+</html>
+			

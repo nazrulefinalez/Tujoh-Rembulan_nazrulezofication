@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Masuk - Butik Tradisi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #bf9b30;
+            --secondary-color: #19281f;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #fafaf8;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--secondary-color);
+            color: var(--white);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-banner {
+            background: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo img {
+            display: block;
+            margin-left: -80px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-color);
+        }
+
+		.icon-carian {
+           width: 20px;      /* boleh ubah ikut saiz yang awak nak */
+           height: 20px;
+        }
+
+         .nav-icons button {
+           background: none;
+           border: none;
+           cursor: pointer;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons button {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-icons button:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger-menu {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        .hamburger-menu:hover {
+            color: var(--primary-color);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: var(--secondary-color);
+            z-index: 2000;
+            transition: left 0.3s ease-in-out;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .side-menu-header h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-menu:hover {
+            color: var(--primary-color);
+        }
+
+        .side-menu-items {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .side-menu-items li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .side-menu-items a {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .side-menu-items a:hover {
+            background: rgba(191,155,48,0.1);
+            color: var(--primary-color);
+            padding-left: 30px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-top: 120px;
+            padding: 80px 30px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600') center/cover;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .login-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 30px;
+        }
+
+        .login-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .login-info {
+            opacity: 0;
+            animation: fadeInLeft 0.8s ease-out 0.2s forwards;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-info h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .login-info p {
+            color: var(--text-light);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .benefits-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .benefits-list li:last-child {
+            border-bottom: none;
+        }
+
+        .benefit-icon {
+            font-size: 24px;
+            color: var(--primary-color);
+            min-width: 30px;
+        }
+
+        .benefit-text {
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .login-form-wrapper {
+            background: var(--bg-light);
+            padding: 50px 40px;
+            border: 1px solid #e5e5e5;
+            opacity: 0;
+            animation: fadeInRight 0.8s ease-out 0.2s forwards;
+        }
+
+        .form-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e5e5e5;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e5e5e5;
+            background: var(--white);
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e5e5e5;
+        }
+
+        .divider span {
+            background: var(--bg-light);
+            padding: 0 15px;
+            position: relative;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .social-btn {
+            padding: 12px;
+            border: 1px solid #e5e5e5;
+            background: var(--white);
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-light);
+        }
+
+        .features-section {
+            background: var(--bg-light);
+            padding: 80px 30px;
+            margin-top: 60px;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .features-header h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .features-header p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer {
+            background: var(--white);
+            padding: 60px 30px 30px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: var(--text-dark);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #e5e5e5;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hamburger-menu {
+                display: block;
+            }
+            .logo img {
+                width: 180px;
+                margin-left: 0;
+            }
+            .page-header h1 {
+                font-size: 32px;
+            }
+            .login-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .login-info h2 {
+                font-size: 28px;
+            }
+            .login-form-wrapper {
+                padding: 30px 20px;
+            }
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+			.search-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#searchInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-carian {
+    width: 24px;
+    height: 24px;
+}
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-banner">KOLEKSI BARU RAYA 2026 - DISKAUN SEHINGGA 70%</div>
+        <nav class="nav-container">
+            <button class="hamburger-menu" id="hamburgerBtn">☰</button>
+            <a href="index.html" class="logo"><img src="lo.png" alt="Butik Tradisi Logo" width="250"></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sedondon.html">Sedondon</a></li>
+                <li><a href="lelaki.html">Lelaki</a></li>
+                <li><a href="wanita.html">Wanita</a></li>
+                <li><a href="kanak.html">Kanak-kanak</a></li>
+                <li><a href="aksesori.html">Aksesori</a></li>
+                <li><a href="hubungi.html">Hubungi Kami</a></li>
+            </ul>
+ <div class="nav-icons">
+   <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Cari...">
+    <button onclick="performSearch()">
+        <img src="ikon/carian.png" alt="Cari" class="icon-carian">
+    </button>
+</div>
+
+<a href="Login.html">
+    <img src="ikon/profil.png" alt="Profil" class="icon-carian">
+</a>
+<a href="TEMPAHAN.html">
+    <img src="ikon/bakul.png" alt="Bakul" class="icon-carian">
+</a>
+
+</div>
+</nav>
+</header>
+
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>MENU</h3>
+            <button class="close-menu" id="closeMenuBtn">×</button>
+        </div>
+        <ul class="side-menu-items">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="sedondon.html">Sedondon</a></li>
+            <li><a href="lelaki.html">Lelaki</a></li>
+            <li><a href="wanita.html">Wanita</a></li>
+            <li><a href="kanak.html">Kanak-kanak</a></li>
+            <li><a href="aksesori.html">Aksesori</a></li>
+            <li><a href="hubungi.html">Hubungi Kami</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+    </div>
+
+    <div class="page-header">
+        <h1>Akaun Saya</h1>
+        <p>Log masuk untuk menikmati pengalaman membeli-belah yang lebih personal dan akses kepada tawaran eksklusif.</p>
+    </div>
+
+    <div class="login-container">
+        <div class="login-grid">
+            <div class="login-info">
+                <h2>Selamat Kembali!</h2>
+                <p>Log masuk ke akaun anda untuk menikmati pengalaman membeli-belah yang lebih baik. Jika anda pelanggan baharu, sila daftar untuk menjadi ahli.</p>
+                
+                <ul class="benefits-list">
+                    <li>
+                        <span class="benefit-icon">✓</span>
+                        <span class="benefit-text">Jejak pesanan anda dengan mudah</span>
+                    </li>
+                    <li>
+                        <span class="benefit-icon">✓</span>
+                        <span class="benefit-text">Simpan senarai keinginan anda</span>
+                    </li>
+                    <li>
+                        <span class="benefit-icon">✓</span>
+                        <span class="benefit-text">Checkout yang lebih pantas</span>
+                    </li>
+                    <li>
+                        <span class="benefit-icon">✓</span>
+                        <span class="benefit-text">Akses kepada tawaran eksklusif ahli</span>
+                    </li>
+                    <li>
+                        <span class="benefit-icon">✓</span>
+                        <span class="benefit-text">Dapatkan points reward setiap pembelian</span>
+                    </li>
+                    <li>
+                        <span class="benefit-icon">✓</span>
+                        <span class="benefit-text">Diskaun istimewa untuk ahli setia</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="login-form-wrapper">
+                <div class="form-tabs">
+                    <button class="tab-btn active" data-tab="login">Log Masuk</button>
+                    <button class="tab-btn" data-tab="register">Daftar</button>
+                </div>
+
+                <!-- Login Form -->
+                <div class="tab-content active" id="login">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Alamat Email</label>
+                            <input type="email" id="loginEmail" name="email" placeholder="nama@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Kata Laluan</label>
+                            <input type="password" id="loginPassword" name="password" placeholder="Masukkan kata laluan" required>
+                        </div>
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" name="remember">
+                                <span>Ingat saya</span>
+                            </label>
+                            <a href="#" class="forgot-password">Lupa kata laluan?</a>
+                        </div>
+                        <button type="submit" class="submit-btn">Log Masuk</button>
+                    </form>
+
+                    <div class="divider">
+                        <span>ATAU LOG MASUK DENGAN</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <span>📘</span>
+                            <span>Facebook</span>
+                        </button>
+                        <button class="social-btn">
+                            <span>🔍</span>
+                            <span>Google</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div class="tab-content" id="register">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerName">Nama Penuh</label>
+                            <input type="text" id="registerName" name="name" placeholder="Nama penuh anda" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Alamat Email</label>
+                            <input type="email" id="registerEmail" name="email" placeholder="nama@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPhone">Nombor Telefon</label>
+                            <input type="tel" id="registerPhone" name="phone" placeholder="+60 12-345 6789" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Kata Laluan</label>
+                            <input type="password" id="registerPassword" name="password" placeholder="Minimum 8 aksara" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Sahkan Kata Laluan</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Masukkan semula kata laluan" required>
+                        </div>
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" name="terms" required>
+                                <span>Saya bersetuju dengan <a href="#" class="forgot-password">Terma &amp; Syarat</a></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="submit-btn">Daftar Sekarang</button>
+                    </form>
+
+                    <div class="divider">
+                        <span>ATAU DAFTAR DENGAN</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <span>📘</span>
+                            <span>Facebook</span>
+                        </button>
+                        <button class="social-btn">
+                            <span>🔍</span>
+                            <span>Google</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <div class="features-container">
+            <div class="features-header">
+                <h2>Kenapa Beli Dengan Kami?</h2>
+                <p>Kami komited memberikan pengalaman membeli-belah terbaik untuk anda</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" style="animation-delay: 0s;">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Penghantaran Percuma</h3>
+                    <p>Nikmati penghantaran percuma untuk pembelian melebihi RM500 ke seluruh Malaysia.</p>
+                </div>
+                <div class="feature-card" style="animation-delay: 0.1s;">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Pembayaran Selamat</h3>
+                    <p>Transaksi anda dilindungi dengan sistem keselamatan bertaraf antarabangsa.</p>
+                </div>
+                <div class="feature-card" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">↩️</div>
+                    <h3>Jaminan Pulangan</h3>
+                    <p>Polisi pertukaran dan pulangan 14 hari tanpa sebarang soalan.</p>
+                </div>
+                <div class="feature-card" style="animation-delay: 0.3s;">
+                    <div class="feature-icon">💳</div>
+                    <h3>Reward Points</h3>
+                    <p>Dapatkan points dengan setiap pembelian dan tukar untuk diskaun istimewa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+               <h4>PAUTAN PANTAS</h4>
+                    <ul>
+                        <li><a href="Hubungi.html">Hubungi Kami</a></li>
+                        <li><a href="index.html">Jejak Pesanan</a></li>
+                        <li><a href="index.html">FAQ</a></li>
+                        <li><a href="index.html">Maklumat Penghantaran</a></li>
+                        <li><a href="index.html">Polisi Pertukaran</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>BELI DENGAN KAMI</h4>
+                    <ul>
+                        <li><a href="SEDONDON.html">Koleksi Sedondon</a></li>
+                        <li><a href="LELAKI.html">Koleksi Lelaki</a></li>
+                        <li><a href="WANITA.html">Koleksi Wanita</a></li>
+                        <li><a href="KANAK-KANAK.html">Koleksi Kanak-kanak</a></li>
+                        <li><a href="AKSESORI.html">Aksesori</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>IKUTI KAMI</h4>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/p/Tujoh-Kuntom-100063709202037/" target="_blank" title="Facebook">📘</a>
+                        <a href="https://www.instagram.com/tujohkuntom/?hl=en" target="_blank" title="Instagram">📷</a>
+                        <a href="https://www.threads.com/@tujohkuntom" target="_blank" title="Threads">🐦</a>
+                    </div>
+                </div>
+            <div class="footer-column">
+                 <h4>HUBUNGI KAMI</h4>
+                <p style="font-size: 14px; line-height: 1.8;">
+                    37, Jalan Raja Mahmud<br>
+                    Kampung Baru, 50300<br>
+                    Kuala Lumpur, Malaysia<br><br>
+                    Tel: +60 12-553 1935<br>
+                    Email: info@tujohrembulan.my
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Tujoh Rembulan. Hak Cipta Terpelihara.</p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        hamburgerBtn.addEventListener('click', () => {
+            sideMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.side-menu-items a').forEach(link => {
+            link.addEventListener('click', () => {
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // TAB SWITCH (LOGIN / REGISTER)
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // LOGIN FORM
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Log masuk berjaya!");
+            this.reset();
+        });
+
+        // REGISTER FORM
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert("Kata laluan tidak sepadan!");
+                return;
+            }
+
+            alert("Pendaftaran berjaya! Sila log masuk.");
+            this.reset();
+
+            // Tukar ke tab login selepas daftar
+            tabBtns[0].click();
+			function performSearch() {
+    var searchText = document.getElementById('searchInput').value;
+    
+    if (searchText.trim() === '') {
+        alert('Sila masukkan kata kunci carian');
+        return;
+    }
+    
+    // Cara 1: Cari dalam halaman semasa
+    // Contoh: highlight text yang dicari
+    window.find(searchText);
+    
+    // ATAU Cara 2: Pergi ke halaman carian dengan query
+    // window.location.href = 'search.html?q=' + encodeURIComponent(searchText);
+    
+    // ATAU Cara 3: Cari menggunakan Google
+    // window.open('https://www.google.com/search?q=' + encodeURIComponent(searchText), '_blank');
+}
+
+// Supaya boleh tekan Enter untuk search
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+        });
+    </script>
+</body>
+</html>
